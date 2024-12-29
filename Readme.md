@@ -1,4 +1,4 @@
-# Physical variabls mapping utility by COPERNICUS Climate observations
+# COPERNICUS Climate data mapping utility
 
 """
 https://www.markdownguide.org/basic-syntax/
