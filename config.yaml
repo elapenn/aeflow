@@ -1,0 +1,52 @@
+###
+1:
+  str: black_carbon_aerosol_optical_depth_550nm
+  var: bcaod550
+  label: 'Black Carbon Aerosol Optical Depth at 550 nm'
+  range: [0,0.1] # WARNING: not universal (*)
+2:
+  str: dust_aerosol_optical_depth_550nm
+  var: duaod550
+  label: 'Dust Aerosol Optical Depth at 550 nm'
+  range: [0,1.0] # (*)
+3:
+  str: organic_matter_aerosol_optical_depth_550nm
+  var: omaod550
+  label: 'Organic Matter Aerosol Optical Depth at 550 nm'
+  range: [0,2.0] # (*)
+4:
+  str: sea_salt_aerosol_optical_depth_550nm
+  var: ssaod550
+  label: 'Sea Salt Aerosol Optical Depth at 550 nm'
+  range: [0,0.5] # (*)
+5:
+  str: sulphate_aerosol_optical_depth_550nm
+  var: suaod550
+  label: 'Sulphate Aerosol Optical Depth at 550 nm'
+  range: [0,3.0] # (*)
+6:
+  str: total_aerosol_optical_depth_469nm
+  var: aod469
+  label: 'Total Aerosol Optical Depth at 469 nm'
+  range: [0,4.0] # (*)
+7:
+  str: total_aerosol_optical_depth_550nm
+  var: aod550
+  label: 'Total Aerosol Optical Depth at 550 nm'
+  range: [0,4.0] # (*)
+8:
+  str: total_aerosol_optical_depth_670nm
+  var: aod670
+  label: 'Total Aerosol Optical Depth at 670 nm'
+  range: [0,4.0] # (*)
+9:
+  str: total_aerosol_optical_depth_865nm
+  var: aod865
+  label: 'Total Aerosol Optical Depth at 865 nm'
+  range: [0,4.0] # (*)
+10:
+  str: total_aerosol_optical_depth_1240nm
+  var: aod1240
+  label: 'Total Aerosol Optical Depth at 1240 nm'
+  range: [0,4.0] # (*)
+###

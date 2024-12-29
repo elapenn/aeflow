@@ -1,0 +1,6 @@
+pyyaml
+zip_files
+cdsapi>=0.7.5
+netCDF4
+matplotlib
+cartopy

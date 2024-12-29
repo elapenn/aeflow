@@ -1,0 +1,4 @@
+data/*
+graphs/*
+read_yaml.py
+*.bck
