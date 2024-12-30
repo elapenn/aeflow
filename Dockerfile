@@ -2,7 +2,8 @@
 FROM python:3.10
 
 # Set your working directory
-WORKDIR /home/user/Scrivania/CNR/VRE/CODE/aeflow/
+#ENV pwd=${PWD}
+#WORKDIR ./aeflow/
 
 # Copy the necessary files
 COPY ./aeflow.py .
