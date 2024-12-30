@@ -7,7 +7,7 @@ https://www.markdownguide.org/basic-syntax/
 This utility uses Copernicus Climate data to generate animations of aerosol evolution of a physical variable on a specific area.
 It is possible to plot a map for Italy [1], Europe [2] and EuAfAm [3] area.
 
-In the file __config.yaml__ you can find physical variables to plot, the number [1,2...10] correspond to --target parameter:
+In the file __config.yaml__ you can find physical variables to plot, the number [1,2...10] correspond to `--target` parameter:
 
 1. black_carbon_aerosol_optical_depth_550nm
 2. dust_aerosol_optical_depth_550nm
@@ -20,9 +20,9 @@ In the file __config.yaml__ you can find physical variables to plot, the number 
 9. total_aerosol_optical_depth_865nm
 10. total_aerosol_optical_depth_1240nm
 
-For --startdate and --enddate always use the YYYY-mm-dd formate, like 2000-01-01.
+For `--startdate` and `--enddate` always use the YYYY-mm-dd formate, like 2000-01-01.
 
-For the --geoarea parameter you can choose between three options: italy, europe, and euafam (always lowercase)
+For the `--geoarea` parameter you can choose between three options: italy, europe, and euafam (always lowercase)
 
 Copernicus Climate data will be download in __data__ directory, while animations will be generated in __graphs__ directory.
 
