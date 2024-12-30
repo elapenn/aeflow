@@ -46,8 +46,8 @@ And run for a test example:
 
 (remember to set your own API key)
 
-For --cdsapikey parameter you must set your own Copernicus Climate CDS API key.
+For `--cdsapikey` parameter you must obtain your own Copernicus Climate CDS API key.
 
-You must register and get your personal key here: https://cds.climate.copernicus.eu/
+You can register and get your personal key here: https://cds.climate.copernicus.eu/
 
 #
