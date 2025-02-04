@@ -34,8 +34,6 @@ extension = 'webp' # gif, webp
 
 # Test url-key
 url = 'https://ads.atmosphere.copernicus.eu/api'
-key = 'c8336150-1131-4a9a-96d1-fc80e9fd034d'
-
 
 # Convert timestamp to date
 def serial_date_to_string(srl_no):
@@ -190,14 +188,11 @@ def generate_ani(cnfg, data_path, graph_path, file_name, target, startdate, endd
     # Close the dataset
     dataset.close()
 
-
-
 print('#####################################################')
 print('#                                                   #')
 print('#    COPERNICUS observable visualization routine    #')
 print('#                                                   #')
 print('#####################################################')
-
 
 if __name__ == "__main__":
 
@@ -225,7 +220,10 @@ if __name__ == "__main__":
         parser.add_argument('--startdate', type=str, help='Start date')
         parser.add_argument('--enddate', type=str, help='End date')
         parser.add_argument('--geoarea', type=str, help='Geographical area')
-        parser.add_argument('--cdsapikey', type=str, help='Copernicus API key', required=False)
+        parser.add_argument('--cdsapikey', type=str, help='Copernicus API key', required=True)
+        
+        parser.add_argument('--basepath', type=str, help='Base output path', default='.')
+        parser.add_argument('--variab_conf', type=str, help='Path to variable config file', default=variab_conf)
 
         if len(sys.argv) == 1:
             parser.print_help(sys.stderr)
@@ -234,55 +232,54 @@ if __name__ == "__main__":
 
     args = parse_args()
 
+    if args.basepath:
+        data_path = os.path.join(args.basepath, data_path)
+        graph_path = os.path.join(args.basepath, graph_path)
 
-# Check working directory, if any
-if not data_path:
-    os.makedirs(data_path)
-if not graph_path:
-    os.makedirs(graph_path)
+    # Check working directory, if any
+    if not os.path.exists(data_path):
+        os.makedirs(data_path)
+    if not os.path.exists(graph_path):
+        os.makedirs(graph_path)
 
-# Read variable config file
-cnfg = read_yaml(variab_conf)
-#print(cnfg)
+    # Read variable config file
+    cnfg = read_yaml(variab_conf)
+    #print(cnfg)
 
+    # Checking right option...
+    if int(args.target) not in range (1, len(cnfg)):
+        print("You must enter a number within 1 and ",len(cnfg))
+        sys.exit(1)
 
-# Checking right option...
-if int(args.target) not in range (1, len(cnfg)):
-    print("You must enter a number within 1 and ",len(cnfg))
-    sys.exit(1)
+    # Checking right option...
+    if not dt.datetime.strptime(args.startdate, "%Y-%m-%d"):
+        print("Invalid start date format. Please use YYYY-MM-DD.")
+        sys.exit(1)
 
-# Checking right option...
-if not dt.datetime.strptime(args.startdate, "%Y-%m-%d"):
-    sys.exit(1)
+    # Checking right option...
+    if not dt.datetime.strptime(args.enddate, "%Y-%m-%d"):
+        print("Invalid end date format. Please use YYYY-MM-DD.")
+        sys.exit(1)
 
-# Checking right option...
-if not dt.datetime.strptime(args.enddate, "%Y-%m-%d"):
-    sys.exit(1)
+    # Set output file name (no extension)
+    file_name = str(cnfg[int(args.target)]["str"]+'_'+args.startdate+'_'+args.enddate)
 
+    # Check data file
+    if exists(data_path+file_name+'.zip'):
+        print(f'The file {file_name} exists')
+    else:
+        print(f'The file {file_name} does not exist!')
+        get_data(str(cnfg[int(args.target)]["str"]), args.startdate, args.enddate, data_path, url, args.cdsapikey)
 
-# Set output file name (no extension)
-file_name = str(cnfg[int(args.target)]["str"]+'_'+args.startdate+'_'+args.enddate)
+    # Check data file format (mv to netcdf)
+    nc_file_path = os.path.join(data_path, file_name + '.nc')
+    if not exists(nc_file_path):
+        print("Extracting file...")
+        with zipfile.ZipFile(os.path.join(data_path, file_name + '.zip'), 'r') as zip:
+            zip.extractall(data_path)
+            zip.close()
+        os.rename(os.path.join(data_path, 'data_sfc.nc'), nc_file_path)
 
+    # Generate animation
+    ani = generate_ani(cnfg, data_path, graph_path, file_name, args.target, args.startdate, args.enddate, args.geoarea)
 
-# Check data file
-if exists(data_path+file_name+'.zip'):
-    print(f'The file {file_name} exists')
-else:
-    print(f'The file {file_name} does not exist!')
-    get_data(str(cnfg[int(args.target)]["str"]), args.startdate, args.enddate, data_path, url, args.cdsapikey)
-
-
-# Check data file format (mv to netcdf)
-if not exists(data_path+file_name+'.nc'):
-    print("Extracting file...")
-    with zipfile.ZipFile(data_path+file_name+'.zip', 'r') as zip:
-        zip.extractall(data_path)
-        zip.close()
-    os.rename(data_path+'data_sfc.nc', data_path+file_name+'.nc')
-
-
-# Generate animation
-ani = generate_ani(cnfg, data_path, graph_path, file_name, args.target, args.startdate, args.enddate, args.geoarea)
-
-
-#
